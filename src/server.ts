@@ -8,7 +8,6 @@ import { userRoutes } from "./modules/users/user.route.js";
 import { bookingRoutes } from "./modules/bookings/booking.route.js";
 
 const app = express();
-const port = config.port;
 
 initDB();
 
@@ -22,11 +21,16 @@ app.use("/api/v1/bookings", bookingRoutes);
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    message: "API route not found",
+    message: "Route not found",
     path: req.path,
   });
 });
 
-app.listen(port, () => {
-  console.log(`app is listing on port ${port}`);
-});
+export default app;
+
+if (process.env.VERCEL !== "1") {
+  const port = config.port;
+  app.listen(port, () => {
+    console.log(`app is listening on port ${port}`);
+  });
+}
