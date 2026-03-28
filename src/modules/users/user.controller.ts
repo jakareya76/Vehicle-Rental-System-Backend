@@ -104,6 +104,7 @@ const DeleteUser = async (req: Request, res: Response) => {
       });
     }
 
+    await userService.DeleteNonActiveBookings(id as string);
     await userService.DeleteUser(id as string);
 
     res.status(200).json({

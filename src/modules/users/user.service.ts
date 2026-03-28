@@ -27,6 +27,14 @@ const UpdateUser = async (
   return result;
 };
 
+const DeleteNonActiveBookings = async (userId: string) => {
+  const result = await pool.query(
+    `DELETE FROM bookings WHERE customer_id = $1 AND status IN ('cancelled', 'returned')`,
+    [userId],
+  );
+  return result;
+};
+
 const DeleteUser = async (id: string) => {
   const result = await pool.query("DELETE FROM users WHERE id = $1", [id]);
   return result;
@@ -45,5 +53,6 @@ export const userService = {
   GetSingleUser,
   UpdateUser,
   HasActiveBookings,
+  DeleteNonActiveBookings,
   DeleteUser,
 };

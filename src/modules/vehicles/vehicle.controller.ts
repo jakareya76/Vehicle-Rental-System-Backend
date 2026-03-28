@@ -141,6 +141,7 @@ const DeleteVehicle = async (req: Request, res: Response) => {
       });
     }
 
+    await vehicleService.DeleteNonActiveBookings(vehicleId as string);
     await vehicleService.DeleteVehicle(vehicleId as string);
 
     res.status(200).json({
